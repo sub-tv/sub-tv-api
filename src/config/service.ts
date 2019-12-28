@@ -4,10 +4,29 @@ import OS from "opensubtitles-api";
 class OpenSubtitleService {
   constructor(private token: string, private openSubtitlesInstance: OS) {}
 
+  search(...args) {
+    return this.openSubtitlesInstance.search(...args);
+  }
+
   async searchMoviesOnIMDB(movieName: string) {
     const result = await this.openSubtitlesInstance.api.SearchMoviesOnIMDB(
       this.token,
       movieName
+    );
+
+    return result.data || [];
+  }
+
+  async searchSubtitle(imdbid, season, episode) {
+    const result = await this.openSubtitlesInstance.api.SearchSubtitles(
+      this.token,
+      [
+        {
+          imdbid,
+          season,
+          episode
+        }
+      ]
     );
 
     return result.data || [];

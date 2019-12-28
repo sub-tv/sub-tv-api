@@ -1,6 +1,7 @@
+import { groupBy } from "lodash";
 import { app } from "./config/server";
 import { OpenSubtitles } from "./config/service";
-import { Movie } from "./models/Movie";
+import { Movie, Subtitles } from "./models";
 import { fetchSeason } from "./services/season";
 import { fetchEpisodes } from "./services/episodes";
 
@@ -38,6 +39,24 @@ const routes = async () => {
 
     res.json(episodes);
   });
+
+  app.get("/api/:imdbId/:season/:ep", async (req, res) => {
+    const { imdbId, season, ep } = req.params;
+
+    const result = await service.searchSubtitle(imdbId, season, ep);
+    const normalizedData = Subtitles.fromApi(result);
+
+    res.json(normalizedData);
+  });
+
+  // app.get("/test", async (req, res) => {
+  //   const result = await service.searchSubtitle();
+  // const data = Subtitles.fromApi(result);
+
+  //   // const byLanguage = groupBy(result, "SubLanguageID");
+
+  //   return res.json(data);
+  // });
 
   /* TODO: fix url consistency */
   // app.get("/api/:imdbId/kind", async (req, res) => {
