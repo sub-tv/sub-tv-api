@@ -15,7 +15,7 @@ function convertHtmlToSeason(elementList: Node[]) {
   });
 }
 
-function fetch(imdbId: string): Promise<string[]> {
+export function fetchSeason(imdbId: string): Promise<string[]> {
   const url = `https://www.imdb.com/title/tt${imdbId}`;
 
   console.log(url);
@@ -26,7 +26,3 @@ function fetch(imdbId: string): Promise<string[]> {
     .then(getSeasonHtmlElements)
     .then(convertHtmlToSeason);
 }
-
-export const seasonExtractor = {
-  fetch
-};

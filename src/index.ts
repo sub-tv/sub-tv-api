@@ -1,5 +1,7 @@
 import { app } from "./config/server";
 import { OpenSubtitles } from "./config/service";
+import { Movie } from "./models/Movie";
+import { fetchSeason } from "./services/season";
 
 const routes = async () => {
   const service = await OpenSubtitles;
@@ -10,6 +12,20 @@ const routes = async () => {
     const result = await service.searchMoviesOnIMDB(req.query.movieName);
 
     res.json(result);
+  });
+
+  app.get("/api/:imdbId/details", async (req, res) => {
+    const { imdbId } = req.params;
+    const movie = new Movie(imdbId);
+
+    /* 1. pegar detalhes */
+    const details = await service.getMovieDetails(movie.id);
+    movie.details = details;
+
+    const seasons = await fetchSeason(movie.id);
+    movie.seasons = seasons;
+
+    res.json(movie.apiResponse);
   });
 
   /* TODO: fix url consistency */
