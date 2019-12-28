@@ -2,6 +2,7 @@ import { app } from "./config/server";
 import { OpenSubtitles } from "./config/service";
 import { Movie } from "./models/Movie";
 import { fetchSeason } from "./services/season";
+import { fetchEpisodes } from "./services/episodes";
 
 const routes = async () => {
   const service = await OpenSubtitles;
@@ -25,7 +26,17 @@ const routes = async () => {
     const seasons = await fetchSeason(movie.id);
     movie.seasons = seasons;
 
+    // const episodes = await fetchEpisodes(movie.seasons["1"]);
+
     res.json(movie.apiResponse);
+  });
+
+  app.get("/api/:imdbId/:season/episodes", async (req, res) => {
+    const { imdbId, season } = req.params;
+
+    const episodes = await fetchEpisodes(imdbId, season);
+
+    res.json(episodes);
   });
 
   /* TODO: fix url consistency */
