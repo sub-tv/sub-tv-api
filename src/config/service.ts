@@ -1,5 +1,4 @@
 import OS from "opensubtitles-api";
-// import { seasonExtractor } from "../services";
 
 class OpenSubtitleService {
   constructor(private token: string, private openSubtitlesInstance: OS) {}
@@ -32,43 +31,12 @@ class OpenSubtitleService {
     return result.data || [];
   }
 
-  // async getAvailableSeasons(imdbId: string) {
-  //   const result = await seasonExtractor.fetch(imdbId);
-
-  //   return result || [];
-  // }
-
-  // async identifyKind(imdbId: string) {
-  // const result = await this.openSubtitlesInstance.api.GetIMDBMovieDetails(
-  //   this.token,
-  //   imdbId
-  // );
-
-  // return result.data.kind;
-  // }
-
   async getMovieDetails(imdbId: string) {
     const result = await this.openSubtitlesInstance.api.GetIMDBMovieDetails(
       this.token,
       imdbId
     );
 
-    return result.data;
-  }
-
-  async test() {
-    const result = await this.openSubtitlesInstance.api.SearchSubtitles(
-      this.token,
-      [{ sublanguageid: "all", imdbid: "2891574", season: "2" }]
-    );
-
-    // const result = await imdb.get({ id: "2891574" }, { apiKey: this.token });
-
-    // console.log(result);
-
-    // return result || [];
-    // console.log(result);
-    console.log(result);
     return result.data;
   }
 
