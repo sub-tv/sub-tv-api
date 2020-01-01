@@ -1,7 +1,7 @@
 stages:
   - deploy
 
-testConfig:
+reload-on-server:
   stage: deploy
   script:
     - eval $(ssh-agent -s) && ssh-add <(echo "$SSH_PRIVATE_KEY")
