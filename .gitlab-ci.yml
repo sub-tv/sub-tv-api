@@ -11,4 +11,4 @@ reload-on-server:
   stage: deploy
   script:
     - eval $(ssh-agent -s) && ssh-add <(echo "$SSH_PRIVATE_KEY")
-    - ssh -o "StrictHostKeyChecking no" hacker@arch-beta.science.net "touch imhere && cd /dados/sub-tv-api/ && touch hereagain"
+    - ssh -o "StrictHostKeyChecking no" hacker@arch-beta.science.net "cd /dados/sub-tv-api/ && git pull && sudo systemctl restart sub-tv"
