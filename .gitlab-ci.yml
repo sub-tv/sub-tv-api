@@ -1,5 +1,8 @@
 image: centos
 
+before_script:
+  - yum -y install sshpass openssh-clients
+
 stages:
   - deploy
 
