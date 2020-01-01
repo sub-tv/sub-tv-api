@@ -7,7 +7,7 @@ import { fetchEpisodes } from "./services/episodes";
 const routes = async () => {
   const service = await OpenSubtitles;
 
-  app.get("/", async (res) => {
+  app.get("/", async (req, res) => {
     res.json({ health: "ok" });
   });
 
