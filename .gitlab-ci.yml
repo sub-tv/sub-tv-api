@@ -1,0 +1,8 @@
+stages:
+  - deploy
+
+testConfig:
+  stage: deploy
+  script:
+    - eval $(ssh-agent -s) && ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - ssh -o "StrictHostKeyChecking no" hacker@arch-beta.science.net touch imhere
