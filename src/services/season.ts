@@ -18,8 +18,6 @@ function convertHtmlToSeason(elementList: Node[]) {
 export function fetchSeason(imdbId: string): Promise<string[]> {
   const url = `https://www.imdb.com/title/tt${imdbId}`;
 
-  console.log(url);
-
   return axios
     .get(url)
     .then(r => r.data)

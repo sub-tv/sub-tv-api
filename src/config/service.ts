@@ -32,6 +32,7 @@ class OpenSubtitleService {
   }
 
   async getMovieDetails(imdbId: string) {
+    /* TODO: Implement a workaround of issues like: 10090796 */
     const result = await this.openSubtitlesInstance.api.GetIMDBMovieDetails(
       this.token,
       imdbId

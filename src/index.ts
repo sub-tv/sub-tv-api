@@ -7,8 +7,14 @@ import { fetchEpisodes } from "./services/episodes";
 const routes = async () => {
   const service = await OpenSubtitles;
 
+  app.get("/", async () => {
+    res.json({ health: "ok" });
+  });
+
   app.get("/api/search", async (req, res) => {
     if (!req.query.movieName) res.json([]);
+
+    req.log.info("something");
 
     const result = await service.searchMoviesOnIMDB(req.query.movieName);
 
@@ -19,13 +25,11 @@ const routes = async () => {
     const { imdbId } = req.params;
     const movie = new Movie(imdbId);
 
-    const details = await service.getMovieDetails(movie.id);
+    const details = await service.getMovieDetails(imdbId);
     movie.details = details;
 
-    const seasons = await fetchSeason(movie.id);
+    const seasons = await fetchSeason(imdbId);
     movie.seasons = seasons;
-
-    // const episodes = await fetchEpisodes(movie.seasons["1"]);
 
     res.json(movie.apiResponse);
   });
@@ -46,15 +50,6 @@ const routes = async () => {
 
     res.json(normalizedData);
   });
-
-  // app.get("/test", async (req, res) => {
-  //   const result = await service.searchSubtitle();
-  // const data = Subtitles.fromApi(result);
-
-  //   // const byLanguage = groupBy(result, "SubLanguageID");
-
-  //   return res.json(data);
-  // });
 };
 
 routes();
