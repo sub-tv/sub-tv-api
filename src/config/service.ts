@@ -1,9 +1,10 @@
+// @ts-ignore
 import OS from "opensubtitles-api";
 
 class OpenSubtitleService {
   constructor(private token: string, private openSubtitlesInstance: OS) {}
 
-  search(...args) {
+  search(...args: any) {
     return this.openSubtitlesInstance.search(...args);
   }
 
@@ -16,7 +17,7 @@ class OpenSubtitleService {
     return result.data || [];
   }
 
-  async searchSubtitle(imdbid, season?, episode?) {
+  async searchSubtitle(imdbid: string, season?: string, episode?: string) {
     const result = await this.openSubtitlesInstance.api.SearchSubtitles(
       this.token,
       [

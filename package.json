@@ -4,7 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon -e ts src/app.ts node --inspect"
+    "dev": "tsc --watch & nodemon dist/app.js",
+    "prebuild": "rimraf dist/",
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node dist/app.js"
   },
   "dependencies": {
     "@types/express-pino-logger": "^4.0.2",
@@ -21,9 +25,14 @@
     "nodemon": "^2.0.2",
     "opensubtitles-api": "5.1.0",
     "pino-pretty": "^3.5.0",
-    "sucrase": "^3.11.0"
+    "rimraf": "^3.0.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.2"
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.2",
+    "@types/jsdom": "^12.2.4",
+    "@types/node": "^13.1.6",
+    "ts-node": "^8.6.1",
+    "typescript": "^3.7.4"
   }
 }

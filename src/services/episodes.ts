@@ -2,11 +2,11 @@ import axios from "axios";
 import { JSDOM } from "jsdom";
 // import { EpisodeModel } from '../models';
 
-function getSeasonHtmlElements(htmlText: string): Node[] {
+function getSeasonHtmlElements(htmlText: string): HTMLAnchorElement[] {
   const dom = new JSDOM(htmlText);
   const elements = dom.window.document.querySelectorAll(
     ".eplist .image a[href*=ep]"
-  );
+  ) as NodeListOf<HTMLAnchorElement>;
 
   return Array.from(elements);
 }

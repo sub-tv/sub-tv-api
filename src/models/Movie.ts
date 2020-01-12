@@ -1,6 +1,6 @@
 export class Movie {
-  private _kind: string;
-  private _title: string;
+  private _kind?: string;
+  private _title?: string;
   /* TODO: FIX ANY */
   private _seasons: any;
 
@@ -21,13 +21,13 @@ export class Movie {
     return { ...this._seasons };
   }
 
-  set details(movieDetails) {
+  set details(movieDetails: any) {
     this._kind = movieDetails.kind;
     this._title = movieDetails.title;
   }
 
   set seasons(seasonList: string[]) {
-    this._seasons = seasonList.reduce((result, current) => {
+    this._seasons = seasonList.reduce((result: any, current) => {
       result[
         current
       ] = `https://www.imdb.com/title/tt0944947/episodes?season=${current}`;
