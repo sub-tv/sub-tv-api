@@ -38,7 +38,7 @@ class OpenSubtitleService {
       imdbId
     );
 
-    if (result.status.includes('408')) {
+    if (result.status.includes("408")) {
       return Promise.reject(`Movie/serie (imbd id: ${imdbId}) not found`);
     }
 

@@ -23,13 +23,22 @@ export const getDetails: RequestHandler = async (req, res) => {
   const { imdbId } = req.params;
   const movie = new Movie(imdbId);
 
-  const details = await service.getMovieDetails(imdbId);
-  movie.details = details;
+  try {
+    const details = await service.getMovieDetails(imdbId);
+    movie.details = details;
 
-  const seasons = await fetchSeason(imdbId);
-  movie.seasons = seasons;
+    const seasons = await fetchSeason(imdbId);
+    movie.seasons = seasons;
 
-  res.json(movie.apiResponse);
+    res.json(movie.apiResponse);
+  } catch (error) {
+    if (error.includes("not found")) {
+      /* TODO: Add a scrapper to get from website */
+      movie.details = { kind: "unknown", title: "unknown" };
+      return res.json(movie.apiResponse);
+    }
+    res.status(505).json({ message: "something went wrong" });
+  }
 };
 
 export const getEpisodes: RequestHandler = async (req, res) => {
@@ -41,7 +50,7 @@ export const getEpisodes: RequestHandler = async (req, res) => {
 };
 
 export const getSubtitles: RequestHandler = async (req, res) => {
-const service = await OpenSubtitles;
+  const service = await OpenSubtitles;
   const { imdbId } = req.params;
   const { season, ep } = req.query;
 
@@ -50,5 +59,3 @@ const service = await OpenSubtitles;
 
   res.json(normalizedData);
 };
-
-
