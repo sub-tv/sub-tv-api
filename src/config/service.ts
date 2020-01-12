@@ -16,7 +16,7 @@ class OpenSubtitleService {
     return result.data || [];
   }
 
-  async searchSubtitle(imdbid, season, episode) {
+  async searchSubtitle(imdbid, season?, episode?) {
     const result = await this.openSubtitlesInstance.api.SearchSubtitles(
       this.token,
       [
@@ -37,6 +37,10 @@ class OpenSubtitleService {
       this.token,
       imdbId
     );
+
+    if (result.status.includes('408')) {
+      return Promise.reject(`Movie/serie (imbd id: ${imdbId}) not found`);
+    }
 
     return result.data;
   }
