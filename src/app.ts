@@ -1,5 +1,7 @@
 import { config } from "dotenv";
 config();
+import * as cron from "node-cron";
+import { OpenSubtitles } from "./config/service";
 import pino from "express-pino-logger";
 import express, { Response, Request, NextFunction } from "express";
 import cors from "cors";
@@ -10,6 +12,11 @@ import apiRoutes from "./routes/api";
 const port = 3000;
 
 const app = express();
+
+/* Avoids token get expired */
+cron.schedule("* */10 * * *", async function() {
+  await (await OpenSubtitles).wakeUp();
+});
 
 app.use(cors());
 app.use(pino());

@@ -4,6 +4,12 @@ import OS from "opensubtitles-api";
 class OpenSubtitleService {
   constructor(private token: string, private openSubtitlesInstance: OS) {}
 
+  /* https://trac.opensubtitles.org/projects/opensubtitles/wiki/XMLRPC#NoOperation */
+  async wakeUp() {
+    const result = await this.openSubtitlesInstance.api.NoOperation(this.token);
+    console.log(result);
+  }
+
   search(...args: any) {
     return this.openSubtitlesInstance.search(...args);
   }
