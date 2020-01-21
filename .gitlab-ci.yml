@@ -12,3 +12,8 @@ reload-on-server:
   script:
     - eval $(ssh-agent -s) && ssh-add <(echo "$SSH_PRIVATE_KEY")
     - ssh -o "StrictHostKeyChecking no" hacker@arch-beta.science.net "cd /dados/sub-tv-api/ && git pull && sudo systemctl restart sub-tv"
+    - echo "$OPEN_SUB_USER_AGENT" >> .env
+    - echo "$OPEN_SUB_USERNAME" >> .env
+    - echo "$OPEN_SUB_PASSWORD" >> .env
+    - echo "$OPEN_SUB_TOKEN" >> .env
+    - echo "$SENTRY_DNS" >> .env
