@@ -1,7 +1,7 @@
 ---
 name: Tracking Error
 about: Use this template for tracking unexpected errors.
-title: "[DATE]: [TOKEN]"
+title: "[ERRO ID]: [TOKEN]"
 labels: bug
 assignees: raulfdm
 ---
