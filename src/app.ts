@@ -1,5 +1,7 @@
 import { config } from "dotenv";
 config();
+import * as cron from "node-cron";
+import { OpenSubtitles } from "./config/service";
 import * as Sentry from "@sentry/node";
 import pino from "express-pino-logger";
 import express, { Request, NextFunction, Response } from "express";
@@ -8,12 +10,16 @@ import bodyParser from "body-parser";
 
 import apiRoutes from "./routes/api";
 
-const port = 3000;
+cron.schedule("* */10 * * *", async function() {
+  await (await OpenSubtitles).wakeUp();
+  // await (await OpenSubtitles).resetTokens();
+});
 
 Sentry.init({
   dsn: process.env.SENTRY_DNS
 });
 
+const port = 3000;
 const app = express();
 
 // The request handler must be the first middleware on the app
@@ -23,6 +29,10 @@ app.use(pino());
 app.use(bodyParser.json());
 
 app.use("/api", apiRoutes);
+
+app.get("/", (_, res) => {
+  res.status(200).json({ health: "ok" });
+});
 
 // The error handler must be before any other error middleware and after all controllers
 app.use(Sentry.Handlers.errorHandler());

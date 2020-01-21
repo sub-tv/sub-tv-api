@@ -77,6 +77,11 @@ class OpenSubtitleService {
     return instance;
   }
 
+  async wakeUp() {
+    const result = await this.openSubtitlesInstance.api.NoOperation(this.token);
+    console.log(result);
+  }
+
   resetTokens() {
     isExpired = true;
     return OpenSubtitleService.instance;
