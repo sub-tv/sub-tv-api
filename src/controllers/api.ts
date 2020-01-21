@@ -8,9 +8,9 @@ import { fetchEpisodes } from "../services/episodes";
 export const search: RequestHandler = async (req, res) => {
   const service = await OpenSubtitles;
 
-  if (!req.query.movieName) res.json([]);
-
-  req.log.info("something");
+  if (!req.query.movieName) {
+    res.json([]);
+  }
 
   const result = await service.searchMoviesOnIMDB(req.query.movieName);
 

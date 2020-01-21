@@ -8,12 +8,6 @@ let instance: Promise<OpenSubtitleService>;
 class OpenSubtitleService {
   constructor(private token: string, private openSubtitlesInstance: OS) {}
 
-  /* https://trac.opensubtitles.org/projects/opensubtitles/wiki/XMLRPC#NoOperation */
-  async wakeUp() {
-    const result = await this.openSubtitlesInstance.api.NoOperation(this.token);
-    console.log(result);
-  }
-
   search(...args: any) {
     return this.openSubtitlesInstance.search(...args);
   }
@@ -23,6 +17,11 @@ class OpenSubtitleService {
       this.token,
       movieName
     );
+
+    if (!result.data) {
+      console.log("result", result);
+      throw new Error("Cannot rich API");
+    }
 
     return result.data || [];
   }
