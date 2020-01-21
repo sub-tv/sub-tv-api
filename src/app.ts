@@ -16,6 +16,7 @@ const app = express();
 /* Avoids token get expired */
 cron.schedule("* */10 * * *", async function() {
   await (await OpenSubtitles).wakeUp();
+  await (await OpenSubtitles).resetTokens();
 });
 
 app.use(cors());

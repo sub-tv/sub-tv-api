@@ -1,6 +1,10 @@
 // @ts-ignore
 import OS from "opensubtitles-api";
 
+let isExpired = false;
+let instance: Promise<OpenSubtitleService>;
+
+/* TODO: Refactor this method to use TS singleton */
 class OpenSubtitleService {
   constructor(private token: string, private openSubtitlesInstance: OS) {}
 
@@ -64,8 +68,22 @@ class OpenSubtitleService {
 
     return new OpenSubtitleService(token, OpenSubtitles);
   }
+
+  static get instance() {
+    if (isExpired || instance === undefined) {
+      instance = OpenSubtitleService.create();
+      isExpired = false;
+    }
+
+    return instance;
+  }
+
+  resetTokens() {
+    isExpired = true;
+    return OpenSubtitleService.instance;
+  }
 }
 
-const OpenSubtitles = OpenSubtitleService.create();
+const OpenSubtitles = OpenSubtitleService.instance;
 
 export { OpenSubtitles };
