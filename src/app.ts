@@ -10,7 +10,7 @@ import bodyParser from "body-parser";
 
 import apiRoutes from "./routes/api";
 
-cron.schedule("* */10 * * *", async function() {
+cron.schedule("*/10 * * * *", async function() {
   await (await OpenSubtitles).wakeUp();
   // await (await OpenSubtitles).resetTokens();
 });
