@@ -19,7 +19,7 @@ Sentry.init({
   dsn: process.env.SENTRY_DNS
 });
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 
 // The request handler must be the first middleware on the app
