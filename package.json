@@ -26,7 +26,7 @@
     "express-pino-logger": "^4.0.0",
     "imdb-api": "^4.0.3",
     "jsdom": "^15.2.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "node-cron": "^2.0.3",
     "nodemon": "^2.0.2",
     "opensubtitles-api": "5.1.0",
